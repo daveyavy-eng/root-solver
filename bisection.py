@@ -1,11 +1,11 @@
 def evaluate(number):
-    return (number - 2.5) ** 2
+    return number ** 2 - 9
 
 
 TOLERANCE = 0.00001
-
-left = 1
-right = 2
+MAX_SEARCHES = 100
+left = 3
+right = -4
 
 
 left_value = evaluate(left)
@@ -36,13 +36,18 @@ while left_value * right_value > 0:
     left_value = evaluate(left)
     right_value = evaluate(right)
     counter += 1
-    if counter > 100:
-        print("No root found in the interval.")
+    if counter >= MAX_SEARCHES:
+        print("Unable to find a sign change in the interval.")
         finding_interval = False
         break
 
+print(f"Number of searches: {counter}")
+
+
 n = (left + right) / 2
 mid_value = evaluate(n)
+
+bisection_counter = 0
 
 if finding_interval:
     while abs(mid_value) > TOLERANCE:
@@ -54,4 +59,8 @@ if finding_interval:
         n = (left + right) / 2
         mid_value = evaluate(n)
 
+        bisection_counter += 1
+
     print(f"The approximate value of the root is {n}")
+
+print(f"Number of bisections: {bisection_counter}")
